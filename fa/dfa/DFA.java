@@ -8,31 +8,44 @@ import java.util.Set;
 
 public class DFA implements DFAInterface{
 
-    private Set<State> Q;
-    private Set<State> F;
-    private Set<Character> Sigma;
-    private DFAState q0;
+    private Set<DFAState> Q; // All states
+    private Set<DFAState> F; // Final states
+    private Set<Character> Sigma; // Alphabet
+    private DFAState q0; // Initial state
+    //Need something to hold delta
 
 
     public DFA() {
-        Q = new HashSet<State>();
-        F = new HashSet<State>();
+        Q = new HashSet<DFAState>();
+        F = new HashSet<DFAState>();
         Sigma = new HashSet<Character>();
         q0 = null;
     }
     @Override
     public boolean addState(String name) {
         DFAState newState = new DFAState(name);
+        if (Q.add(newState)) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean setFinal(String name) {
+        DFAState tempState = new DFAState(name);
+        if (Q.contains(tempState)) {
+            F.add(tempState);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean setStart(String name) {
+        DFAState tempState = new DFAState(name);
+        if (Q.contains(tempState)) {
+            q0 = tempState;
+        }
         return false;
     }
 
