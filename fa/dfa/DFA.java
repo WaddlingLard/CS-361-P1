@@ -11,7 +11,7 @@ public class DFA implements DFAInterface{
     private Set<State> Q;
     private Set<State> F;
     private Set<Character> Sigma;
-    private State q0;
+    private DFAState q0;
 
 
     public DFA() {
@@ -22,6 +22,7 @@ public class DFA implements DFAInterface{
     }
     @Override
     public boolean addState(String name) {
+        DFAState newState = new DFAState(name);
         return false;
     }
 
