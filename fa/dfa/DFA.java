@@ -2,10 +2,24 @@ package fa.dfa;
 
 import fa.State;
 
+import java.util.Map; // I believe we need this for delta
+import java.util.HashSet;
 import java.util.Set;
 
 public class DFA implements DFAInterface{
 
+    private Set<State> Q;
+    private Set<State> F;
+    private Set<Character> Sigma;
+    private State q0;
+
+
+    public DFA() {
+        Q = new HashSet<State>();
+        F = new HashSet<State>();
+        Sigma = new HashSet<Character>();
+        q0 = null;
+    }
     @Override
     public boolean addState(String name) {
         return false;
@@ -23,7 +37,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public void addSigma(char symbol) {
-
+        Sigma.add(symbol);
     }
 
     @Override
@@ -33,7 +47,12 @@ public class DFA implements DFAInterface{
 
     @Override
     public Set<Character> getSigma() {
-        return null;
+        Set<Character> tempSigma = new HashSet<>(); // This is here for encapsulation
+        Object[] temp = Sigma.toArray();
+        for (int i = 0; i < temp.length; i++) {
+            tempSigma.add((Character) temp[i]);
+        }
+        return tempSigma;
     }
 
     @Override
