@@ -33,11 +33,17 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setFinal(String name) {
-        DFAState tempState = new DFAState(name);
-        if (Q.contains(tempState)) {
-            F.add(tempState);
-            return true;
+//        DFAState tempState = new DFAState(name);
+        for (DFAState state: Q) {
+            if (state.getName().equals(name)) {
+                return F.add(state);
+            }
         }
+        // Not necessary, I believe
+//        if (Q.contains(tempState)) {
+//            F.add(tempState);
+//            return true;
+//        }
         return false;
     }
 
