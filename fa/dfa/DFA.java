@@ -5,6 +5,7 @@ import fa.State;
 import java.util.Map; // I believe we need this for delta
 import java.util.HashSet;
 import java.util.Set;
+import java.util.HashMap; // add this in case 
 
 public class DFA implements DFAInterface{
 
@@ -12,14 +13,17 @@ public class DFA implements DFAInterface{
     private Set<DFAState> F; // Final states
     private Set<Character> Sigma; // Alphabet
     private DFAState q0; // Initial state
-    //Need something to hold delta
+    Map<DFAState, Map<Character,DFAState>> delta;//Need something to hold delta 
+    // not sure if this is correct 
 
 
     public DFA() {
-        Q = new HashSet<DFAState>();
-        F = new HashSet<DFAState>();
-        Sigma = new HashSet<Character>();
-        q0 = null;
+        this.Q = new HashSet<DFAState>();
+        this.F = new HashSet<DFAState>();
+        this.Sigma = new HashSet<Character>();
+        this.q0 = null;
+        this.delta = new HashMap<>();
+
     }
     @Override
     public boolean addState(String name) {
@@ -71,17 +75,22 @@ public class DFA implements DFAInterface{
 
     @Override
     public State getState(String name) {
-        return null;
+        for( State state: Q){
+            if(state.getName().equals(name)){
+                return start;
+            }
+            return null;
+        }
     }
 
     @Override
     public boolean isFinal(String name) {
-        return false;
+        return F.contains(name);
     }
 
     @Override
     public boolean isStart(String name) {
-        return false;
+        return q0.contains(name);
     }
 
     @Override
