@@ -84,11 +84,14 @@ public class DFA implements DFAInterface{
     @Override
     public State getState(String name) {
         for( State state: Q){
+            if(state.getSigma().equals(name)){
+                return start;
             if(state.getName().equals(name)) {
                 return state;
             }
         }
-        return null;
+            return null;
+        }
     }
 
     @Override
