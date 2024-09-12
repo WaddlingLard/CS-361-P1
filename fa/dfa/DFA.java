@@ -63,6 +63,11 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean accepts(String s) {
+        char[] traceString = s.toCharArray();
+        for (int i = 0; i < traceString.length; i++) {
+
+        }
+
         return false;
     }
 
@@ -79,16 +84,22 @@ public class DFA implements DFAInterface{
     @Override
     public State getState(String name) {
         for( State state: Q){
-            if(state.getName().equals(name)){
-                return start;
+            if(state.getName().equals(name)) {
+                return state;
             }
-            return null;
         }
+        return null;
     }
 
     @Override
     public boolean isFinal(String name) {
-        return F.contains(name);
+        for (DFAState state: F) {
+            if (state.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+//        return F.contains(name);
     }
 
     @Override
@@ -103,6 +114,17 @@ public class DFA implements DFAInterface{
 
     @Override
     public DFA swap(char symb1, char symb2) {
+        return null;
+    }
+
+    /*
+       @author
+       @param state
+       @param input
+       @returns The next transition state
+     */
+    private DFAState getTransition(DFAState state, Character input) {
+
         return null;
     }
 }
