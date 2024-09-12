@@ -82,48 +82,29 @@ public class DFA implements DFAInterface{
     }
 
     @Override
-    public State getState(String name) {
+    public State getState(String name) { // revision might needed
         for( State state: Q){
-            if(state.getName().equals(name)){
-                return state;
-            }
-            return null;
-        }
-
-                return start;
             if(state.getName().equals(name)) {
-=======
-
                 return state;
             }
         }
-            return null;
-        }
+        return null;
     }
 
     @Override
     public boolean isFinal(String name) {
-
         for (DFAState state: F) {
             if (state.getName().equals(name)) {
                 return true;
             }
         }
-
-        return F.contains(name);
+        return false;
 //        return F.contains(name);
-=======
-        return F.contains(name);
-
     }
 
     @Override
     public boolean isStart(String name) {
-
         return q0.getName().equals(name);
-=======
-        return q0.contains(name);
-
     }
 
     @Override
