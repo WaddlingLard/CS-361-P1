@@ -76,7 +76,7 @@ public class DFA implements DFAInterface{
     @Override
     public State getState(String name) {
         for( State state: Q){
-            if(state.getSigma().equals(name)){
+            if(state.getName().equals(name)){
                 return start;
             }
             return null;
@@ -85,12 +85,12 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isFinal(String name) {
-        return false;
+        return F.contains(name);
     }
 
     @Override
     public boolean isStart(String name) {
-        return false;
+        return q0.contains(name);
     }
 
     @Override
