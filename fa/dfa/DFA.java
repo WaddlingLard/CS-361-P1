@@ -93,7 +93,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isStart(String name) {
-        return q0.contains(name);
+        return q0.getName().equals(name);
     }
 
     @Override
