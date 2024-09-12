@@ -85,11 +85,15 @@ public class DFA implements DFAInterface{
     public State getState(String name) {
         for( State state: Q){
             if(state.getName().equals(name)){
-<<<<<<< HEAD
+                return state;
+            }
+            return null;
+        }
+
                 return start;
             if(state.getName().equals(name)) {
 =======
->>>>>>> 716b0d2 (all)
+
                 return state;
             }
         }
@@ -99,26 +103,27 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isFinal(String name) {
-<<<<<<< HEAD
+
         for (DFAState state: F) {
             if (state.getName().equals(name)) {
                 return true;
             }
         }
-        return false;
+
+        return F.contains(name);
 //        return F.contains(name);
 =======
         return F.contains(name);
->>>>>>> 3fd5ef9 (isFinal and isStart)
+
     }
 
     @Override
     public boolean isStart(String name) {
-<<<<<<< HEAD
+
         return q0.getName().equals(name);
 =======
         return q0.contains(name);
->>>>>>> 3fd5ef9 (isFinal and isStart)
+
     }
 
     @Override
