@@ -77,7 +77,7 @@ public class DFA implements DFAInterface{
     public State getState(String name) {
         for( State state: Q){
             if(state.getName().equals(name)){
-                return start;
+                return state;
             }
             return null;
         }
