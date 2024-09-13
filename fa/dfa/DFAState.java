@@ -9,9 +9,8 @@ public class DFAState extends State {
 
     private Map<Character, DFAState> transitions;
 
-    public DFAState() { // not needed
-
-    }
+    @SuppressWarnings("unused")
+    public DFAState() {} // not needed
 
     public DFAState(String name) {
         super(name); // Calling the super constructor on the State abstract class
@@ -20,12 +19,21 @@ public class DFAState extends State {
 
     /*
 
+       @param
+       @param
+       @return
      */
-    public boolean addDFATransition(Character sigma, DFA location) {
+    public DFAState addDFATransition(Character sigma, DFAState location) {
+        return transitions.put(sigma, location);
+    }
 
+    /*
 
-
-        return false;
+       @param
+       @return
+     */
+    public DFAState getDFATransition(Character sigma) {
+        return transitions.get(sigma);
     }
 
 }

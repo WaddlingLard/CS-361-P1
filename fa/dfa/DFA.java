@@ -2,10 +2,10 @@ package fa.dfa;
 
 import fa.State;
 
-import java.util.Map; // I believe we need this for delta
+// import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.HashMap; // add this in case 
+// import java.util.HashMap;
 
 public class DFA implements DFAInterface{
 
@@ -13,16 +13,16 @@ public class DFA implements DFAInterface{
     private Set<DFAState> F; // Final states
     private Set<Character> Sigma; // Alphabet
     private DFAState q0; // Initial state
-    Map<DFAState, Map<Character,DFAState>> delta;//Need something to hold delta 
+    // Map<DFAState, Map<Character,DFAState>> delta;//Need something to hold delta
     // not sure if this is correct 
-
+    // might not be needed
 
     public DFA() {
-        this.Q = new HashSet<DFAState>();
-        this.F = new HashSet<DFAState>();
-        this.Sigma = new HashSet<Character>();
+        this.Q = new HashSet<>();
+        this.F = new HashSet<>();
+        this.Sigma = new HashSet<>();
         this.q0 = null;
-        this.delta = new HashMap<>();
+        // this.delta = new HashMap<>();
 
     }
     @Override
@@ -77,8 +77,8 @@ public class DFA implements DFAInterface{
     public Set<Character> getSigma() {
         Set<Character> tempSigma = new HashSet<>(); // This is here for encapsulation
         Object[] temp = Sigma.toArray();
-        for (int i = 0; i < temp.length; i++) {
-            tempSigma.add((Character) temp[i]);
+        for (Object item: temp) {
+            tempSigma.add((Character) item);
         }
         return tempSigma;
     }
@@ -104,6 +104,7 @@ public class DFA implements DFAInterface{
 //        return F.contains(name);
     }
 
+    // This might need to be revised
     @Override
     public boolean isStart(String name) {
         for(DFAState state: F){
@@ -116,6 +117,17 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
+        if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) {
+            DFAState origin = getDFAState(fromState);
+            DFAState destination = getDFAState(toState);
+
+            if (origin == null) { // Checking if origin is valid object
+                return false;
+            }
+
+            DFAState result = origin.addDFATransition(onSymb, destination);
+            return !(result == null);
+        }
         return false;
     }
 
@@ -125,13 +137,56 @@ public class DFA implements DFAInterface{
     }
 
     /*
-       @author
+
        @param state
        @param input
-       @returns The next transition state
+       @return The next transition state
      */
     private DFAState getTransition(DFAState state, Character input) {
 
+        return null;
+    }
+
+    /*
+
+       @param check
+       @return
+     */
+    private boolean inSigma(char check) {
+        Set<Character> alphabet = getSigma();
+        for (Character letter: alphabet) {
+            if (letter.equals(check)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+
+       @param name
+       @return
+     */
+    private boolean isValidState(String name) {
+        for (DFAState state: Q) {
+            if (state.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+
+       @param name
+       @return
+     */
+    private DFAState getDFAState(String name) {
+        for (DFAState state: Q) {
+            if (state.getName().equals(name)) {
+                return state;
+            }
+        }
         return null;
     }
 }
