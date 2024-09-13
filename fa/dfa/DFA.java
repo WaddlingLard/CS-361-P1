@@ -84,7 +84,7 @@ public class DFA implements DFAInterface{
     }
 
     @Override
-    public State getState(String name) {
+    public State getState(String name) { // revision might needed
         for( State state: Q){
             if(state.getName().equals(name)) {
                 return state;
