@@ -9,7 +9,7 @@ public class DFAState extends State {
 
     private Map<Character, DFAState> transitions;
 
-    public DFAState() {
+    public DFAState() { // not needed
 
     }
 
