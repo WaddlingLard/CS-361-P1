@@ -49,9 +49,11 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setStart(String name) {
-        DFAState tempState = new DFAState(name);
-        if (Q.contains(tempState)) {
-            q0 = tempState;
+        for (DFAState state: Q) {
+            if (state.getName().equals(name)) {
+                q0 = state;
+                return true;
+            }
         }
         return false;
     }
