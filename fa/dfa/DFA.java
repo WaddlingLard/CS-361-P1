@@ -106,7 +106,12 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isStart(String name) {
-        return q0.getName().equals(name);
+        for(DFAState state: F){
+            if(state.getName().equals(name)){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
