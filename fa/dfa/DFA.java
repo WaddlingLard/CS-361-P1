@@ -105,13 +105,25 @@ public class DFA implements DFAInterface{
     }
 
     @Override
+    // not sure if this is how should be approached
     public boolean isStart(String name) {
-        return q0.getName().equals(name);
+        for(DFAState state: F){
+            if(state.getName().equals(name)){
+                return false;
+            }
+        }
+        return true;
     }
+
+
+
+
+
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         return false;
+
     }
 
     @Override
