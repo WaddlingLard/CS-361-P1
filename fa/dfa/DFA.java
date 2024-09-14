@@ -65,13 +65,24 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean accepts(String s) {
-        char[] traceString = s.toCharArray();
-        for (int i = 0; i < traceString.length; i++) {
 
+        DFAState currentState = this.q0;
+        // char[] traceString = s.toCharArray();
+        // for (int i = 0; i < traceString.length; i++) {
+
+        // }
+        for (char c: s.toCharArray()){
+            currentState = currentState.getDFATransition(c);
+        }
+        if(currentState == null){
+            return false;
         }
 
-        return false;
+        return this.F.contains(currentState); //return true if final state is accepting
     }
+   
+
+    
 
     @Override
     public Set<Character> getSigma() {
@@ -132,8 +143,46 @@ public class DFA implements DFAInterface{
     }
 
     @Override
+
+    //revision might needed
+    
     public DFA swap(char symb1, char symb2) {
-        return null;
+        DFA newDFA = new DFA();
+
+        newDFA.Q = new HashSet<>(this.Q);
+        newDFA.F = new HashSet<>(this.F);
+        newDFA.Sigma = new HashSet<>(this.Sigma);
+        newDFA.q0 = this.q0;
+
+        for(DFAState state : this.Q){
+
+            for (Character sym : this.Sigma){
+
+                DFAState nextState = state.getDFATransition(sym);
+
+                if(nextState != null){
+                     char newSym;
+                    
+                    if(sym == symb1 ){
+                        newSym = symb2;
+                    }else if(sym == symb2){
+                        newSym = symb1;
+                    } else{
+                        newSym = sym;
+                    }
+
+                    DFAState newState = newDFA.getDFAState(state.getName());
+                    DFAState newNextState = newDFA.getDFAState(nextState.getName());
+                    if (newState != null && newNextState != null) {
+                        newDFA.addTransition(newState.getName(), newNextState.getName(), newSym);
+                    }
+                }
+                
+            }
+        }
+
+
+        return newDFA;
     }
 
     /*
@@ -143,7 +192,7 @@ public class DFA implements DFAInterface{
        @return The next transition state
      */
     private DFAState getTransition(DFAState state, Character input) {
-
+     
         return null;
     }
 
