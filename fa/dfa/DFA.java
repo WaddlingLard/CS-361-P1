@@ -187,17 +187,6 @@ public class DFA implements DFAInterface{
 
     /*
 
-       @param state
-       @param input
-       @return The next transition state
-     */
-    private DFAState getTransition(DFAState state, Character input) {
-     
-        return null;
-    }
-
-    /*
-
        @param check
        @return
      */
