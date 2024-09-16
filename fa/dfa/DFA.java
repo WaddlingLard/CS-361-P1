@@ -28,6 +28,11 @@ public class DFA implements DFAInterface{
     @Override
     public boolean addState(String name) {
         DFAState newState = new DFAState(name);
+        for (DFAState state: Q) {
+            if (state.getName().equals(newState.getName())) { // Already exists
+                return false;
+            }
+        }
         return Q.add(newState);
     }
 
