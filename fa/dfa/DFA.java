@@ -134,15 +134,23 @@ public class DFA implements DFAInterface{
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) {
+//            System.out.println("ADDING TRANSITION");
             DFAState origin = getDFAState(fromState);
             DFAState destination = getDFAState(toState);
 
+//            System.out.println(origin.getName());
+//            System.out.println(destination.getName());
+
             if (origin == null) { // Checking if origin is valid object
+                System.out.println("ORIGIN IS NULL");
                 return false;
             }
 
-            DFAState result = origin.addDFATransition(onSymb, destination);
-            return !(result == null);
+            origin.addDFATransition(onSymb, destination);
+            DFAState result = origin.getDFATransition(onSymb);
+            if (result.getName().equals(destination.getName())) {
+                return true;
+            }
         }
         return false;
     }
@@ -188,6 +196,15 @@ public class DFA implements DFAInterface{
 
 
         return newDFA;
+    }
+
+    /*
+
+        @return
+     */
+    public String toString() {
+
+        return null;
     }
 
     /*
