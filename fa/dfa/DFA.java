@@ -1,11 +1,8 @@
 package fa.dfa;
 
 import fa.State;
-
-// import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
-// import java.util.HashMap;
 
 public class DFA implements DFAInterface{
 
@@ -13,17 +10,12 @@ public class DFA implements DFAInterface{
     private Set<DFAState> F; // Final states
     private Set<Character> Sigma; // Alphabet
     private DFAState q0; // Initial state
-    // Map<DFAState, Map<Character,DFAState>> delta;//Need something to hold delta
-    // not sure if this is correct 
-    // might not be needed
 
     public DFA() {
         this.Q = new HashSet<>();
         this.F = new HashSet<>();
         this.Sigma = new HashSet<>();
         this.q0 = null;
-        // this.delta = new HashMap<>();
-
     }
     @Override
     public boolean addState(String name) {
@@ -38,17 +30,11 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setFinal(String name) {
-//        DFAState tempState = new DFAState(name);
         for (DFAState state: Q) {
             if (state.getName().equals(name)) {
                 return F.add(state);
             }
         }
-        // Not necessary, I believe
-//        if (Q.contains(tempState)) {
-//            F.add(tempState);
-//            return true;
-//        }
         return false;
     }
 
@@ -72,10 +58,6 @@ public class DFA implements DFAInterface{
     public boolean accepts(String s) {
 
         DFAState currentState = this.q0;
-        // char[] traceString = s.toCharArray();
-        // for (int i = 0; i < traceString.length; i++) {
-
-        // }
         for (char c: s.toCharArray()){
             currentState = currentState.getDFATransition(c);
         }
@@ -85,9 +67,6 @@ public class DFA implements DFAInterface{
 
         return this.F.contains(currentState); //return true if final state is accepting
     }
-   
-
-    
 
     @Override
     public Set<Character> getSigma() {
@@ -117,32 +96,25 @@ public class DFA implements DFAInterface{
             }
         }
         return false;
-//        return F.contains(name);
     }
 
-    // This might need to be revised
     @Override
     public boolean isStart(String name) {
         for(DFAState state: F){
             if(state.getName().equals(name)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) {
-//            System.out.println("ADDING TRANSITION");
             DFAState origin = getDFAState(fromState);
             DFAState destination = getDFAState(toState);
 
-//            System.out.println(origin.getName());
-//            System.out.println(destination.getName());
-
             if (origin == null) { // Checking if origin is valid object
-                System.out.println("ORIGIN IS NULL");
                 return false;
             }
 
@@ -197,10 +169,6 @@ public class DFA implements DFAInterface{
 
         return newDFA;
     }
-
-
-    
-     
 
     /*
 
