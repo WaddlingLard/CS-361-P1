@@ -185,16 +185,7 @@ public class DFA implements DFAInterface{
         return newDFA;
     }
 
-    /*
 
-       @param state
-       @param input
-       @return The next transition state
-     */
-    private DFAState getTransition(DFAState state, Character input) {
-     
-        return null;
-    }
 
     /*
 
@@ -238,4 +229,61 @@ public class DFA implements DFAInterface{
         }
         return null;
     }
+
+    @Override
+
+    // further revision might needed
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    
+    // Append states (Q)
+    sb.append("Q = { ");
+    for (State state : Q) {
+        sb.append(state.getName()).append(" ");
+    }
+    sb.append("}\n");
+    
+    // Append alphabet (Sigma)
+    sb.append("Sigma = { ");
+    for (Character symbol : Sigma) {
+        sb.append(symbol).append(" ");
+    }
+    sb.append("}\n");
+    
+    // Append transition function (delta)
+    sb.append("delta =\n\t");
+    for (Character symbol : Sigma) {
+        sb.append(symbol).append("\t");
+    }
+    sb.append("\n");
+    for (State state : Q) {
+        DFAState dfaState = (DFAState) state; // Cast to DFAState to access transitions
+        sb.append(dfaState.getName()).append("\t");
+        for (Character symbol : Sigma) {
+            DFAState nextState = dfaState.getDFATransition(symbol);
+
+            if (nextState != null) {
+                sb.append(nextState.getName()).append("\t");
+            } else {
+                sb.append("-").append("\t");
+            }
+        }
+        sb.append("\n");
+    }
+    
+    // Append start state (q0)
+    sb.append("q0 = ").append(q0.getName()).append("\n");
+    
+    // Append final states (F)
+    sb.append("F = { ");
+    for (State state : F) {
+        sb.append(state.getName()).append(" ");
+    }
+    sb.append("}\n");
+    
+    return sb.toString();
 }
+
+}
+
+
