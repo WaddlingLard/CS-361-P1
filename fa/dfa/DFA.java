@@ -28,6 +28,11 @@ public class DFA implements DFAInterface{
     @Override
     public boolean addState(String name) {
         DFAState newState = new DFAState(name);
+        for (DFAState state: Q) {
+            if (state.getName().equals(newState.getName())) { // Already exists
+                return false;
+            }
+        }
         return Q.add(newState);
     }
 
@@ -129,15 +134,23 @@ public class DFA implements DFAInterface{
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) {
+//            System.out.println("ADDING TRANSITION");
             DFAState origin = getDFAState(fromState);
             DFAState destination = getDFAState(toState);
 
+//            System.out.println(origin.getName());
+//            System.out.println(destination.getName());
+
             if (origin == null) { // Checking if origin is valid object
+                System.out.println("ORIGIN IS NULL");
                 return false;
             }
 
-            DFAState result = origin.addDFATransition(onSymb, destination);
-            return !(result == null);
+            origin.addDFATransition(onSymb, destination);
+            DFAState result = origin.getDFATransition(onSymb);
+            if (result.getName().equals(destination.getName())) {
+                return true;
+            }
         }
         return false;
     }
@@ -186,6 +199,12 @@ public class DFA implements DFAInterface{
     }
 
 
+       @param state
+       @param input
+       @return The next transition state
+     */
+    private DFAState getTransition(DFAState state, Character input) {
+     
 
     /*
 
