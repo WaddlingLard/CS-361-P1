@@ -40,12 +40,10 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setStart(String name) {
-        if (q0 == null) {
-            for (DFAState state: Q) {
-                if (state.getName().equals(name)) {
-                    q0 = state;
-                    return true;
-                }
+        for (DFAState state: Q) {
+            if (state.getName().equals(name)) {
+                q0 = state;
+                return true;
             }
         }
         return false;
@@ -102,12 +100,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isStart(String name) {
-        for(DFAState state: F){
-            if(state.getName().equals(name)){
-                return true;
-            }
-        }
-        return false;
+        return q0.getName().equals(name);
     }
 
     @Override
