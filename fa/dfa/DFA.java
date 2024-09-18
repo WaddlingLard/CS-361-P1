@@ -123,21 +123,27 @@ public class DFA implements DFAInterface{
     }
 
     @Override
-
-    //revision might needed
-    
     public DFA swap(char symb1, char symb2) {
         DFA newDFA = new DFA();
 
-        newDFA.Q = new HashSet<>(this.Q);
-        newDFA.F = new HashSet<>(this.F);
         newDFA.Sigma = new HashSet<>(this.Sigma);
-        newDFA.q0 = this.q0;
+        for (DFAState state: this.Q) {
+            DFAState tempState = new DFAState(state.getName());
+            newDFA.Q.add(tempState);
+
+            if(this.isFinal(tempState.getName())) {
+                newDFA.setFinal(tempState.getName());
+            }
+
+            if(this.isStart(tempState.getName())) {
+                newDFA.setStart(tempState.getName());
+            }
+
+        }
 
         for(DFAState state : this.Q){
 
             for (Character sym : this.Sigma){
-
                 DFAState nextState = state.getDFATransition(sym);
 
                 if(nextState != null){
@@ -160,8 +166,6 @@ public class DFA implements DFAInterface{
                 
             }
         }
-
-
         return newDFA;
     }
 
@@ -213,6 +217,9 @@ public class DFA implements DFAInterface{
     // further revision might needed
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
     
         // Append states (Q)
         sb.append("Q = { ");
@@ -220,6 +227,7 @@ public class DFA implements DFAInterface{
             sb.append(state.getName()).append(" ");
         }
         sb.append("}\n");
+
     
         // Append final states (F)
         sb.append("F = { ");
@@ -227,21 +235,41 @@ public class DFA implements DFAInterface{
             sb.append(state.getName()).append(" ");
         }
         sb.append("}\n");
-    
         // Append alphabet (Sigma)
         sb.append("Sigma = { ");
+    for (State state : Q) {
+        sb.append(state.getName()).append(" ");
+    }
+    sb.append("}\n");
+        for (Character symbol : Sigma) {
+            sb.append(symbol).append(" ");
         for (Character sym : Sigma) {
             sb.append(sym).append(" ");
         }
         sb.append("}\n");
     
+    // Append alphabet (Sigma)
+    sb.append("Sigma = { ");
+    for (Character symbol : Sigma) {
+        sb.append(symbol).append(" ");
+    }
+    sb.append("}\n");
+
+    
         // Append start state (q0)
         sb.append("q0 = ").append(q0.getName()).append("\n");
-    
         // Append transition function (delta)
         sb.append("delta =\n\t");
+   
         for (Character symbol : Sigma) {
             sb.append(symbol).append("\t");
+        }
+        sb.append("\n");
+        for (State state : Q) {
+            DFAState dfaState = (DFAState) state; // Cast to DFAState to access transitions
+            sb.append(dfaState.getName()).append("\t");
+            for (Character symbol : Sigma) {
+                DFAState nextState = dfaState.getDFATransition(symbol);
         }
         sb.append("\n");
         for (State state : Q) {
@@ -258,9 +286,27 @@ public class DFA implements DFAInterface{
             }
             sb.append("\n");
         }
-    
-        return sb.toString();
+        }
+        sb.append("\n");
     }
+    
+    // Append start state (q0)
+    sb.append("q0 = ").append(q0.getName()).append("\n");
+
+        // Append start state (q0)
+        sb.append("q0 = ").append(q0.getName()).append("\n");
+
+        // Append final states (F)
+        sb.append("F = { ");
+        for (State state : F) {
+            sb.append(state.getName()).append(" ");
+        }
+        sb.append("}\n");
+
+
+
+        return sb.toString();
+
 
 }
 
