@@ -4,7 +4,13 @@ import fa.State;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+/*
+    This class is used as an acting DFA which enables the user to create a DFA and in turn, a Finite Automata.
 
+    @author Brian Wu
+    @author Max Ma
+    @version 1.0
+ */
 public class DFA implements DFAInterface{
 
     private Set<DFAState> Q; // All states
@@ -22,7 +28,7 @@ public class DFA implements DFAInterface{
     public boolean addState(String name) {
         DFAState newState = new DFAState(name);
         for (DFAState state: Q) {
-            if (state.getName().equals(newState.getName())) { // Already exists
+            if (state.getName().equals(newState.getName())) { // State already exists
                 return false;
             }
         }
@@ -32,7 +38,7 @@ public class DFA implements DFAInterface{
     @Override
     public boolean setFinal(String name) {
         for (DFAState state: Q) {
-            if (state.getName().equals(name)) {
+            if (state.getName().equals(name)) { // State exists!
                 return F.add(state);
             }
         }
@@ -42,7 +48,7 @@ public class DFA implements DFAInterface{
     @Override
     public boolean setStart(String name) {
         for (DFAState state: Q) {
-            if (state.getName().equals(name)) {
+            if (state.getName().equals(name)) { // State exists!
                 q0 = state;
                 return true;
             }
@@ -59,7 +65,7 @@ public class DFA implements DFAInterface{
     public boolean accepts(String s) {
 
         DFAState currentState = this.q0;
-        for (char c: s.toCharArray()){
+        for (char c: s.toCharArray()){ // This is to divide each operation by a character
             currentState = currentState.getDFATransition(c);
         }
         if(currentState == null){
@@ -80,9 +86,9 @@ public class DFA implements DFAInterface{
     }
 
     @Override
-    public State getState(String name) { // revision might needed
+    public State getState(String name) {
         for( State state: Q){
-            if(state.getName().equals(name)) {
+            if(state.getName().equals(name)) { // State found!
                 return state;
             }
         }
@@ -92,7 +98,7 @@ public class DFA implements DFAInterface{
     @Override
     public boolean isFinal(String name) {
         for (DFAState state: F) {
-            if (state.getName().equals(name)) {
+            if (state.getName().equals(name)) { // State is in the F set!
                 return true;
             }
         }
@@ -106,7 +112,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
-        if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) {
+        if (inSigma(onSymb) && isValidState(fromState) && isValidState(toState)) { // Validate all data provided
             DFAState origin = getDFAState(fromState);
             DFAState destination = getDFAState(toState);
 
@@ -115,7 +121,7 @@ public class DFA implements DFAInterface{
             }
 
             origin.addDFATransition(onSymb, destination);
-            DFAState result = origin.getDFATransition(onSymb);
+            DFAState result = origin.getDFATransition(onSymb); // Validating if transition correctly occurred
             if (result.getName().equals(destination.getName())) {
                 return true;
             }
@@ -127,8 +133,8 @@ public class DFA implements DFAInterface{
     public DFA swap(char symb1, char symb2) {
         DFA newDFA = new DFA();
 
-        newDFA.Sigma = new HashSet<>(this.Sigma);
-        for (DFAState state: this.Q) {
+        newDFA.Sigma = new LinkedHashSet<>(this.Sigma); // This is the only thing that is copied over from the original DFA
+        for (DFAState state: this.Q) { // Instantiating the new DFA's fields
             DFAState tempState = new DFAState(state.getName());
             newDFA.Q.add(tempState);
 
@@ -142,15 +148,15 @@ public class DFA implements DFAInterface{
 
         }
 
-        for(DFAState state : this.Q){
+        for(DFAState state : this.Q){ // Now flipping the transitions
 
             for (Character sym : this.Sigma){
                 DFAState nextState = state.getDFATransition(sym);
 
-                if(nextState != null){
+                if(nextState != null){ // Valid transition found
                      char newSym;
                     
-                    if(sym == symb1 ){
+                    if(sym == symb1 ){ // These branches of if statements is to determine what Character to use
                         newSym = symb2;
                     }else if(sym == symb2){
                         newSym = symb1;
@@ -161,7 +167,7 @@ public class DFA implements DFAInterface{
                     DFAState newState = newDFA.getDFAState(state.getName());
                     DFAState newNextState = newDFA.getDFAState(nextState.getName());
                     if (newState != null && newNextState != null) {
-                        newDFA.addTransition(newState.getName(), newNextState.getName(), newSym);
+                        newDFA.addTransition(newState.getName(), newNextState.getName(), newSym); // 'Swapped' transition applied!
                     }
                 }
                 
@@ -171,9 +177,9 @@ public class DFA implements DFAInterface{
     }
 
     /*
-
+       A helper method that determines if the provided alphabet is inside the Sigma set
        @param check
-       @return
+       @return True if inSigma, False if not
      */
     private boolean inSigma(char check) {
         Set<Character> alphabet = getSigma();
@@ -186,9 +192,9 @@ public class DFA implements DFAInterface{
     }
 
     /*
-
+       A helper method that determines if the provided String 'state' is in the set
        @param name
-       @return
+       @return True if valid state, false if not
      */
     private boolean isValidState(String name) {
         for (DFAState state: Q) {
@@ -200,9 +206,9 @@ public class DFA implements DFAInterface{
     }
 
     /*
-
+       A helper method that returns the DFA state that is reflective of the provided name
        @param name
-       @return
+       @return The DFAState that reflects the given name
      */
     private DFAState getDFAState(String name) {
         for (DFAState state: Q) {
@@ -214,8 +220,6 @@ public class DFA implements DFAInterface{
     }
 
     @Override
-
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
     
@@ -266,14 +270,6 @@ public class DFA implements DFAInterface{
     
         return sb.toString();
     }
-
-    
-
-
-
-
-
-
 }
 
 
