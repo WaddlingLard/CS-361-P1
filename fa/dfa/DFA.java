@@ -2,6 +2,7 @@ package fa.dfa;
 
 import fa.State;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DFA implements DFAInterface{
@@ -12,9 +13,9 @@ public class DFA implements DFAInterface{
     private DFAState q0; // Initial state
 
     public DFA() {
-        this.Q = new HashSet<>();
-        this.F = new HashSet<>();
-        this.Sigma = new HashSet<>();
+        this.Q = new LinkedHashSet<>();
+        this.F = new LinkedHashSet<>();
+        this.Sigma = new LinkedHashSet<>();
         this.q0 = null;
     }
     @Override
@@ -237,8 +238,8 @@ public class DFA implements DFAInterface{
             sb.append(symbol).append("\t");
         }
         sb.append("\n");
-        for (State state : Q) {
-            DFAState dfaState = (DFAState) state; // Cast to DFAState to access transitions
+        for (DFAState state : Q) {
+            DFAState dfaState = state; // Cast to DFAState to access transitions
             sb.append(dfaState.getName()).append("\t");
             for (Character symbol : Sigma) {
                 DFAState nextState = dfaState.getDFATransition(symbol);
