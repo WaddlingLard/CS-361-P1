@@ -226,22 +226,12 @@ public class DFA implements DFAInterface{
         }
         sb.append("}\n");
     
-        // Append final states (F)
-        sb.append("F = { ");
-        for (State state : F) {
-            sb.append(state.getName()).append(" ");
-        }
-        sb.append("}\n");
-    
         // Append alphabet (Sigma)
         sb.append("Sigma = { ");
         for (Character symbol : Sigma) {
             sb.append(symbol).append(" ");
         }
         sb.append("}\n");
-    
-        // Append start state (q0)
-        sb.append("q0 = ").append(q0.getName()).append("\n");
     
         // Append transition function (delta)
         sb.append("delta =\n\t");
@@ -263,6 +253,16 @@ public class DFA implements DFAInterface{
             }
             sb.append("\n");
         }
+
+        // Append start state (q0)
+        sb.append("q0 = ").append(q0.getName()).append("\n");
+
+        // Append final states (F)
+        sb.append("F = { ");
+        for (State state : F) {
+            sb.append(state.getName()).append(" ");
+        }
+        sb.append("}\n");
     
         return sb.toString();
     }
