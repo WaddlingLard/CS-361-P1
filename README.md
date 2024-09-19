@@ -37,9 +37,6 @@ $ java -cp .:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar
 org.junit.runner.JUnitCore test.dfa.DFATest
 ```
 
-You will be prompted for integer values representing distance to the fire,
-fire intensity, marshmallow burn resistance, and marshmallow sugar density.
-
 ## Sources used
 
 - https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashSet.html 
